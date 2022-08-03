@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/viewProducts">
+
+    <fragment
+        android:id="@+id/viewProducts"
+        android:name="com.example.assignmentswipebalusonawane.ui.view.ViewProducts"
+        android:label="ViewProducts" >
+        <action
+            android:id="@+id/action_viewProducts_to_viewAddProduct"
+            app:destination="@id/viewAddProduct" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewAddProduct"
+        android:name="com.example.assignmentswipebalusonawane.ui.view.ViewAddProduct"
+        android:label="ViewAddProduct" >
+        <action
+            android:id="@+id/action_viewAddProduct_to_viewProducts"
+            app:destination="@id/viewProducts"
+            app:popUpTo="@id/viewProducts"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
