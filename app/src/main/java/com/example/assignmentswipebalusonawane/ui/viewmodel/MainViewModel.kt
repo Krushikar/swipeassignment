@@ -17,8 +17,16 @@ class MainViewModel(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
+    //Defining mutable live data
     private val _products = MutableLiveData<Resource<List<Product>>>(Resource.Loading())
     val products = _products
+
+    private var _productConsumed: Boolean = false
+    val productConsume get() = _productConsumed
+
+    fun setProductConsume(consumed: Boolean){
+        _productConsumed = consumed
+    }
 
     private val _addProducts = MutableLiveData<Resource<AddProductResponse>>(Resource.Loading())
     val addProducts = _addProducts
@@ -28,6 +36,7 @@ class MainViewModel(
         if (!networkHelper.isNetworkConnected()) return _products.postValue(Resource.Error("No internet Connection"))
 
         _products.postValue(Resource.Loading())
+         //Starting coroutine in view model scope
         viewModelScope.launch(Dispatchers.IO) {
             when(val result = repository.getProducts()){
 

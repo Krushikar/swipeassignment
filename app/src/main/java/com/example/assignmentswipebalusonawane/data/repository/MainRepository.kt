@@ -6,6 +6,7 @@ import com.example.assignmentswipebalusonawane.model.Product
 import com.example.assignmentswipebalusonawane.utils.Resource
 import retrofit2.http.Field
 
+//This is a main repository where our viewmodel will communicate to get the required data
 interface MainRepository {
 
     suspend fun getProducts() : Resource<List<Product>>

@@ -11,6 +11,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//This is a app module where we are creating objects for DI
 val appModule = module {
 
     single { provideNetworkHelper(androidContext()) }
@@ -25,15 +26,17 @@ val appModule = module {
 
 private fun provideNetworkHelper(context: Context): NetworkHelper = NetworkHelper(context)
 
-fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
+private fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
-fun provideRetrofit(Base_url: String,
-                    gsonConverterFactory: GsonConverterFactory) : Retrofit = Retrofit.Builder()
+private fun provideRetrofit(
+    Base_url: String,
+    gsonConverterFactory: GsonConverterFactory
+): Retrofit = Retrofit.Builder()
     .baseUrl(Base_url)
     .addConverterFactory(gsonConverterFactory)
     .build()
 
-fun provideApi(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
+private fun provideApi(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
 
 
 

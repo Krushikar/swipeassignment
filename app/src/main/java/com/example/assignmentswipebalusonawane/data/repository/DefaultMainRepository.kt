@@ -9,14 +9,15 @@ import com.example.assignmentswipebalusonawane.utils.Resource
 import retrofit2.Response
 import java.lang.Exception
 
+//Implementation of main repository to get actual data
 class DefaultMainRepository(val api: Api) : MainRepository {
 
+    //Getting list of products from api
     override suspend fun getProducts(): Resource<List<Product>> {
 
         return try {
 
             val response = api.getProduct()
-            Log.e("Response", "response $response")
 
             if (!response.isSuccessful) {
                 Resource.Error("Request Failed ${response.message()}")
@@ -31,6 +32,7 @@ class DefaultMainRepository(val api: Api) : MainRepository {
 
     }
 
+    //Passing data to api
     override suspend fun addProduct(
         productName: String,
         productType: String,
@@ -45,8 +47,6 @@ class DefaultMainRepository(val api: Api) : MainRepository {
                 productPrice,
                 productTax
             )
-
-            Log.e("Res", response.toString())
 
             if (!response.isSuccessful){
 

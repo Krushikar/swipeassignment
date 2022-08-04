@@ -12,6 +12,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        //Init koin for dependency
         startKoin {
             androidContext(applicationContext)
             modules(appModule, repoModule, viewModelModule)

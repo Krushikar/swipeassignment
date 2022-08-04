@@ -16,9 +16,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ViewAddProduct : Fragment() {
 
+    //binding for bind the ui to fragment
     private var _binding: ViewAddProductBinding? = null
     private val binding get() = _binding!!
 
+    //getting view model by lazy
     private val mainViewmodel: MainViewModel by viewModel()
 
     private lateinit var newProduct: NewProduct
@@ -36,6 +38,7 @@ class ViewAddProduct : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Toggling progressbar
         progress("hide")
 
         binding.radioGroup.setOnCheckedChangeListener { _, id ->
@@ -63,6 +66,7 @@ class ViewAddProduct : Fragment() {
                     newProduct.price,
                     newProduct.tax
                 )
+                //Start observing live data to get information about product adding request
                 observeData()
 
             }
@@ -108,6 +112,7 @@ class ViewAddProduct : Fragment() {
         binding.buttonAddProduct.visibility = if (state == "hide" ) View.VISIBLE else View.INVISIBLE
     }
 
+    //Validating the user entered data
     private fun validateData() : Boolean {
 
         if (product_type.isEmpty()) {

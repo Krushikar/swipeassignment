@@ -1,5 +1,6 @@
 package com.example.assignmentswipebalusonawane.utils
 
+//This class is getting current status of  api request
 sealed class Resource<T>(
     val data: T? = null,
     val message: String? = null

@@ -25,7 +25,7 @@ class ViewProducts : Fragment() {
     private val mainViewModel: MainViewModel by viewModel()
 
     private lateinit var productAdapter: AdapterProducts
-    private  var products = mutableListOf<Product>()
+    private var products = mutableListOf<Product>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class ViewProducts : Fragment() {
 
         progress("show")
         setRecyclerView()
-        mainViewModel.getProducts()
+        if (!mainViewModel.productConsume) mainViewModel.getProducts()
         observeData()
 
 
@@ -57,7 +57,7 @@ class ViewProducts : Fragment() {
         _binding = null
     }
 
-    private fun setRecyclerView(){
+    private fun setRecyclerView() {
 
         productAdapter = AdapterProducts(products)
 
@@ -69,14 +69,18 @@ class ViewProducts : Fragment() {
 
     }
 
-    private fun observeData(){
+    private fun observeData() {
 
-        mainViewModel.products.observe(viewLifecycleOwner){
+        mainViewModel.products.observe(viewLifecycleOwner) {
 
-            when(it){
+            when (it) {
 
                 is Resource.Success -> {
-                    it.data?.let { products -> productAdapter.addProducts(products) }
+                    it.data?.let { products ->
+                        productAdapter.addProducts(products)
+                        mainViewModel.setProductConsume(true)
+
+                    }
                     progress("hide")
                 }
 
@@ -87,7 +91,7 @@ class ViewProducts : Fragment() {
 
                 is Resource.Loading -> {
 
-                    progress("show")
+                   if (!mainViewModel.productConsume) progress("show")
                 }
 
             }
@@ -96,9 +100,9 @@ class ViewProducts : Fragment() {
 
     }
 
-    fun progress(state: String = "show"){
+    fun progress(state: String = "show") {
 
-        binding.progressBar.visibility = if (state == "show" ) View.VISIBLE else View.INVISIBLE
+        binding.progressBar.visibility = if (state == "show") View.VISIBLE else View.INVISIBLE
 
     }
 }
